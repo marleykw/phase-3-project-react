@@ -16,10 +16,8 @@ function CommentForm({outfit_id, handleUpdate}) {
           ...formData,
           [e.target.name]:e.target.value
         })
-        //console.log(formData)
     }
         const handleSubmit = (e) => {
-        e.preventDefault()
         const newComment = {
             ...formData
         }

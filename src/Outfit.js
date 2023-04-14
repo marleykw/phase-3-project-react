@@ -2,9 +2,9 @@ import React from "react";
 import OutfitCarousel from "./OutfitCarousel";
 import CommentForm from "./CommentForm";
 import Comments from "./Comments";
-import { Link } from "react-router-dom";
 
 function Outfit(props, {handleUpdate}) {
+    
     const articles = props.outfit.articles
     const articlesToRender = articles.map((article)=><OutfitCarousel key={article.id} article={article} outfit_id={props.outfit_id}/>)
 return (
