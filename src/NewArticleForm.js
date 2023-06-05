@@ -1,7 +1,7 @@
 
 import React, {useState} from "react";
 
-function NewItemForm({handleAddItem}) {
+function NewArticleForm({handleAddArticle}) {
   const initialFormData = {
     name: "",
     image: "",
@@ -20,23 +20,22 @@ function NewItemForm({handleAddItem}) {
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    const newItem = {
+    const newArticle = {
       ...formData
     }
 
-    fetch("http://localhost:9292/closet", {
+    fetch("http://localhost:9292/articles", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
         },
-        body: JSON.stringify(newItem),
+        body: JSON.stringify(newArticle),
     })
         .then((r) => r.json())
-        .then((item) => handleAddItem(item))
+        .then((article) => handleAddArticle(article))
 
         setFormData(initialFormData)
   };
-
   return (
     <div className="new-item-form">
       <h2>Add to Closet</h2>
@@ -52,4 +51,4 @@ function NewItemForm({handleAddItem}) {
 }
 
 
-export default NewItemForm;
+export default NewArticleForm;

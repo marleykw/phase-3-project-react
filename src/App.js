@@ -1,58 +1,59 @@
 
 import React, {useState, useEffect} from "react";
 import Header from "./Header";
-import NewItemForm from "./NewItemForm";
-import {BrowserRouter as Router, Routes, Route} from "react-router-dom";
+import NewArticleForm from "./NewArticleForm";
+import {Routes, Route} from "react-router-dom";
 import NavBar from "./NavBar";
 import ClosetPage from "./ClosetPage";
-import ItemDetailPage from "./ItemDetailPage";
+import ArticleDetailPage from "./ArticleDetailPage";
 
 function App() {
-  const [items, setItems] = useState([]);
+  const [articles, setArticles] = useState([]);
+  
  
-
- 
-  function handleAddItem(item) {
-    setItems([...items, item])
+  function handleAddArticle(article) {
+    setArticles([...articles, article])
   }
 
-
- function handleRemoveItem(id){
-    const updatedItemList = items.filter((item)=> item.id !== id);
-    setItems(updatedItemList);
+ function handleRemoveArticle(id){
+    const updatedArticleList = articles.filter((article)=> article.id !== id);
+    setArticles(updatedArticleList);
   }
 
-  function handleDeleteItem(item) {
-    fetch(`http://localhost:9292/closet/${item.id}`, {
+  function handleDeleteArticle(article) {
+    fetch(`http://localhost:9292/articles/${article.id}`, {
       method: "DELETE",
     })
     .then((r)=> {
       if(r.status === 200) {
-        handleRemoveItem(item.id)
+        handleRemoveArticle(article.id)
       }
     });
   }
 
+  function handleUpdateArticles(newArticles) {
+    setArticles(newArticles)
+  }
 
   useEffect(() => {
-    fetch(`http://localhost:9292/closet`)
-    .then((r)=>r.json())
-    .then((data) => setItems(data))
-  }, [])
 
+    fetch(`http://localhost:9292/articles`)
+    .then((r)=>r.json())
+    .then((data) => setArticles(data))
+  }, [])
   return (
     <>
-    <Header />
-    <NavBar />
-    <Routes>
-      <Route path="/Form" element={<NewItemForm handleAddItem={handleAddItem} />} />
-      <Route exact path="/Closet" element={<ClosetPage handleDeleteItem={handleDeleteItem} items={items} />} />
-      <Route exact path="/Closet/:id" element={<ItemDetailPage/>} />
-      <Route path="/" element={<ClosetPage handleDeleteItem={handleDeleteItem} items={items} />}/>
-    </Routes>
+      <Header />
+      <NavBar />
+      <Routes>
+        <Route path="/Form" element={<NewArticleForm handleAddArticle={handleAddArticle} />} />
+        <Route exact path="/Closet" element={<ClosetPage handleDeleteArticle={handleDeleteArticle} articles={articles} />} />
+        <Route exact path="/Closet/:id" element={<ArticleDetailPage articles={articles} handleUpdateArticles={handleUpdateArticles}/>} />
+      </Routes>
     </>
 
   )
 }
 
 export default App;
+

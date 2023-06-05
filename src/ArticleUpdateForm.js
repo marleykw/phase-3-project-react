@@ -3,10 +3,10 @@ import React, {useState} from "react";
 import { useParams } from "react-router";
 
 
-function ItemUpdateForm({handleUpdateItem}) {
+function ArticleUpdateForm({updateArticle}) {
   const initialFormData = {last_worn: ""}
   const params = useParams();
-  //const [formData, setFormData] = useState(initialFormData)
+
   const [formData, setFormData] = useState([])
   const handleChange = (e) => {
     setFormData({
@@ -18,19 +18,19 @@ function ItemUpdateForm({handleUpdateItem}) {
   const handleSubmit = (e) => {
     e.preventDefault();
     
-    const updatedItem = {
+    const updatedArticle = {
       ...formData
     }
-    console.log(updatedItem)
-    fetch(`http://localhost:9292/closet/${params.id}`, {
+
+    fetch(`http://localhost:9292/articles/${params.id}`, {
       method: "PATCH",
       headers: {
         "Content-Type": "application/json",
         },
-        body: JSON.stringify(updatedItem),
+        body: JSON.stringify(updatedArticle),
     })
         .then((r) => r.json())
-        .then((item) => handleUpdateItem(item.id))
+        .then((article) => updateArticle(article))
         setFormData(initialFormData)
   };
 
@@ -46,4 +46,4 @@ function ItemUpdateForm({handleUpdateItem}) {
 }
 
 
-export default ItemUpdateForm;
+export default ArticleUpdateForm;

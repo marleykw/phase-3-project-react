@@ -1,10 +1,10 @@
 import React from "react";
-import ItemList from "./ItemList";
+import ArticleList from "./ArticleList";
 
-function ClosetPage({items, handleDeleteItem}) {
+function ClosetPage({articles, handleDeleteArticle}) {
 return (
     <div className="main-section">
-    <ItemList handleDeleteItem={handleDeleteItem} items={items} />
+    <ArticleList handleDeleteArticle={handleDeleteArticle} articles={articles} />
     </div>
 )
 }

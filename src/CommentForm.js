@@ -1,12 +1,12 @@
 import React, {useState} from "react";
 
-function CommentForm({article_id, handleUpdateItem}) {
-    const id = article_id
+function CommentForm({articleId, addComment}) {
+    const id = articleId
     const initialFormData = {
         comment: "",
         created_at: "",
         updated_at: "",
-        outfit_id: ""
+        article_id: ""
       }
       const [formData, setFormData] = useState(initialFormData)
 
@@ -27,17 +27,21 @@ function CommentForm({article_id, handleUpdateItem}) {
                   "Content-Type": "application/json",
                 },
                 body: JSON.stringify({
-                  article_id: e.target.id,
+                  article_id: id,
                   comment: newComment.comment
                 })
-              })   
-          handleUpdateItem(id)
+              }).then (r=> {
+                if (r.ok) {
+                  r.json()
+                  .then(addComment)
+                }
+              })  
           setFormData(initialFormData)
     }
 
     return(
         <form id={id} onSubmit={handleSubmit}>
-            <input type="text" name="comment" placeholder="Add Comments" onChange={handleChange}/>
+            <input type="text" name="comment" placeholder="Add Comments" onChange={handleChange} value={formData.comment}/>
             <button type="submit" id={id}>Post Comment</button>
         </form>
     )
