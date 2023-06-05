@@ -1,7 +1,7 @@
 import React, {useState} from "react";
 
-function CommentForm({outfit_id, handleUpdate}) {
-    const id = outfit_id
+function CommentForm({article_id, handleUpdateItem}) {
+    const id = article_id
     const initialFormData = {
         comment: "",
         created_at: "",
@@ -11,31 +11,33 @@ function CommentForm({outfit_id, handleUpdate}) {
       const [formData, setFormData] = useState(initialFormData)
 
     const handleChange = (e) => {
-        e.preventDefault()
         setFormData({
           ...formData,
           [e.target.name]:e.target.value
         })
     }
         const handleSubmit = (e) => {
+        e.preventDefault()
         const newComment = {
             ...formData
         }
-            fetch(`http://localhost:9292/closet`, {
+            fetch(`http://localhost:9292/comments`, {
                 method: "POST",
                 headers: {
                   "Content-Type": "application/json",
                 },
                 body: JSON.stringify({
-                  outfit_id: e.target.id,
+                  article_id: e.target.id,
                   comment: newComment.comment
                 })
-              });              
+              })   
+          handleUpdateItem(id)
+          setFormData(initialFormData)
     }
 
     return(
         <form id={id} onSubmit={handleSubmit}>
-            <input type="text" name="comment" placeholder="Comments" onChange={handleChange}/>
+            <input type="text" name="comment" placeholder="Add Comments" onChange={handleChange}/>
             <button type="submit" id={id}>Post Comment</button>
         </form>
     )

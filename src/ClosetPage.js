@@ -1,10 +1,10 @@
 import React from "react";
-import OutfitList from "./OutfitList";
+import ItemList from "./ItemList";
 
-function ClosetPage({outfits, handleUpdate}) {
+function ClosetPage({items, handleDeleteItem}) {
 return (
     <div className="main-section">
-        <OutfitList handleUpdate={handleUpdate} outfits={outfits} />
+    <ItemList handleDeleteItem={handleDeleteItem} items={items} />
     </div>
 )
 }
