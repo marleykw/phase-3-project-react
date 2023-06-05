@@ -17,33 +17,45 @@ useEffect(() => {
   }, [articles]);
 
   const addComment = (comment) => {
-    const newComment = comment
-    if (curArticle.comments === undefined) {
-      curArticle.comments = comment
-    } else {
-      const newComments = [newComment, ...curArticle.comments]
-      curArticle.comments = newComments
-    }
-    const filteredArticles = articles.filter((article)=> article.id !== comment.article_id)
-    const newArticles = [...filteredArticles, curArticle]
-    handleUpdateArticles(newArticles)
+    const filteredArticles = articles.map((article)=> {
+      if (article.id == comment.article_id) {
+        const oldComments = [...article.comments]
+        const newComments = [...oldComments, comment]
+        article.comments = newComments
+        return article
+      } else {
+      return article };
+    });
+
+    handleUpdateArticles(filteredArticles)
   }  
 
   const deleteComment = (id, articleID) => {
     const updatedcomments = curArticle.comments.filter((comment) => comment.id !== id)
     curArticle.comments = updatedcomments
-    const filteredArticles = articles.filter((article)=> article.id !== articleID)
-    const newArticles = [...filteredArticles, curArticle]
-    handleUpdateArticles(newArticles)
+    const filteredArticles = articles.map((article)=> {
+      if (article.id == articleID) {
+        const updatedcomments = curArticle.comments.filter((comment) => comment.id !== id)
+        article.comments = updatedcomments
+        return article
+      } else {
+      return article };
+    });
+    handleUpdateArticles(filteredArticles)
   }  
 
   const updateArticle = (article) => {
     const updatedLastWorn = article.last_worn
     const curID  = article.id
     curArticle.last_worn = updatedLastWorn
-    const filteredArticles = articles.filter((article)=> article.id !== curID)
-    const newArticles = [...filteredArticles, curArticle]
-    handleUpdateArticles(newArticles)
+    const filteredArticles = articles.map((article)=> {
+      if (article.id == curID) {
+        article.last_worn = updatedLastWorn
+        return article
+      } else {
+      return article };
+    });
+    handleUpdateArticles(filteredArticles)
   }
 if(curArticle !== undefined && curArticle.id) {
 return(
