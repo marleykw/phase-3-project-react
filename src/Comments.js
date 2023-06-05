@@ -30,12 +30,3 @@ function handleDelete(id, articleID) {
   } 
 export default Comments;
 
-/*  <h3>Comments</h3>
-        {commentData && commentData.map((comment) => (
-          <div key={comment.id}>
-            <h5>{comment.comment}</h5>
-            <h6>{comment.created_at}</h6>
-            <button onClick={()=>handleDelete(comment.id, articleInfo.id)} id={comment.id}>X</button>
-        </div>
-))}
-*/
