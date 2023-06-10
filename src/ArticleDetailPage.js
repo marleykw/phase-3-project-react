@@ -23,7 +23,8 @@ useEffect(() => {
         const newComments = [...oldComments, comment]
         article.comments = newComments
         return article
-      } else {
+        }
+      else {
       return article };
     });
 
@@ -44,14 +45,11 @@ useEffect(() => {
     handleUpdateArticles(filteredArticles)
   }  
 
-  const updateArticle = (article) => {
-    const updatedLastWorn = article.last_worn
-    const curID  = article.id
-    curArticle.last_worn = updatedLastWorn
+  const updateArticle = (updatedArticle) => {
+    const curID  = updatedArticle.id
     const filteredArticles = articles.map((article)=> {
       if (article.id == curID) {
-        article.last_worn = updatedLastWorn
-        return article
+        return updatedArticle
       } else {
       return article };
     });
@@ -68,7 +66,7 @@ return(
   <h5>{`Last worn on: ${curArticle.last_worn}`}</h5>
   <Comments comments={curArticle.comments} articles={articles} deleteComment={deleteComment} />
   <CommentForm articleId={curArticle.id} addComment={addComment}/>
-  <ArticleUpdateForm updateArticle={updateArticle}/>
+  <ArticleUpdateForm updateArticle={updateArticle} curArticle={curArticle}/>
 </div>
 )
 }

@@ -3,11 +3,9 @@ import React, {useState} from "react";
 import { useParams } from "react-router";
 
 
-function ArticleUpdateForm({updateArticle}) {
-  const initialFormData = {last_worn: ""}
+function ArticleUpdateForm({updateArticle, curArticle}) {
   const params = useParams();
-
-  const [formData, setFormData] = useState([])
+  const [formData, setFormData] = useState({...curArticle})
   const handleChange = (e) => {
     setFormData({
       ...formData,
@@ -21,7 +19,6 @@ function ArticleUpdateForm({updateArticle}) {
     const updatedArticle = {
       ...formData
     }
-
     fetch(`http://localhost:9292/articles/${params.id}`, {
       method: "PATCH",
       headers: {
@@ -31,7 +28,7 @@ function ArticleUpdateForm({updateArticle}) {
     })
         .then((r) => r.json())
         .then((article) => updateArticle(article))
-        setFormData(initialFormData)
+
   };
 
   return (
@@ -39,6 +36,7 @@ function ArticleUpdateForm({updateArticle}) {
       <h3>Last Worn</h3>
       <form onSubmit={handleSubmit}>
         <input type="date" name="last_worn" placeholder="Last Worn Date" value={formData.last_worn} onChange={handleChange}/>
+        <input type="number" name="price" placeholder="Price" value={formData.price} onChange={handleChange}/>
         <button type="submit">Update Last Worn Date</button>
       </form>
     </div>
